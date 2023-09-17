@@ -6,6 +6,8 @@ import { Inter } from "next/font/google";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext } from "react";
 import { useRouter } from "next/router";
+import { AuthProvider } from "@/auth";
+import CheckAuth from "@/checkAuth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,24 +21,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { currentUser } = useContext(AuthContext);
-
-  // const RequireAuth = ({ children }: any) => {
-  //   const router = useRouter();
-
-  //   if (!currentUser) {
-  //     router.push("/login");
-  //     return null;
-  //   }
-
-  //   return children;
-  // };
-
   return (
     <html lang="en">
       <body className={inter.className}>
         {/* <RequireAuth></RequireAuth> */}
-        {children}
+        <CheckAuth>
+          <AuthProvider>{children}</AuthProvider>
+        </CheckAuth>
       </body>
     </html>
   );

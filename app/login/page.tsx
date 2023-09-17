@@ -8,14 +8,14 @@ import Image from "next/image";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { AuthContext } from "../../context/AuthContext";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 const Login = () => {
-  const { dispatch } = useContext(AuthContext);
-  //   const router = useRouter();
+  // const { dispatch } = useContext(AuthContext);
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -36,9 +36,12 @@ const Login = () => {
       );
       localStorage.setItem("image", JSON.stringify(matchingUser.data().image));
       localStorage.setItem("accountID", JSON.stringify(matchingUser.id));
-      dispatch({ type: "LOGIN", payload: matchingUser.data() });
-      alert("Login Successfully!")
-      //   router.push("/");
+      // dispatch({ type: "LOGIN", payload: matchingUser.data() });
+      sessionStorage.setItem("user", JSON.stringify(matchingUser.data()));
+
+      console.log(matchingUser.data());
+      alert("Login Successfully!");
+      router.push("/");
     } else {
       setPasswordError("Invalid email or password");
     }
