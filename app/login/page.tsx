@@ -37,7 +37,7 @@ const Login = () => {
       localStorage.setItem("image", JSON.stringify(matchingUser.data().image));
       localStorage.setItem("accountID", JSON.stringify(matchingUser.id));
       // dispatch({ type: "LOGIN", payload: matchingUser.data() });
-      sessionStorage.setItem("user", JSON.stringify(matchingUser.id));
+      sessionStorage.setItem("user", JSON.stringify(matchingUser.data()));
 
       router.push("/");
     } else {

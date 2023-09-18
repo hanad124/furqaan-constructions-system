@@ -22,7 +22,6 @@ const CheckAuth = ({ children }: any) => {
 
   if (!state.user) {
     // return null; // Render nothing if there's no user (to avoid briefly showing the protected page)
-    router.push("/login");
   }
 
   return <>{children}</>;

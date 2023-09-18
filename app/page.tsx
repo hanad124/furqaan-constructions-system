@@ -4,17 +4,14 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Sign } from "crypto";
-import { db } from "@/firebase";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
-import { AuthContext } from "../auth";
 
 export default function Home() {
   const router = useRouter();
-  const { state, dispatch } = useContext(AuthContext);
 
-  if (!state.user) {
+  const user = sessionStorage.getItem("user");
+
+  if (!user) {
     return null; // Render nothing if there's no user (to avoid briefly showing the protected page)
   }
   return (
