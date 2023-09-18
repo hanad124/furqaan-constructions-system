@@ -1,5 +1,6 @@
-import React, { createContext, useReducer } from "react";
-import { auth } from "./firebase"; // Import the initialized auth module from your firebase file
+import React, { createContext, useEffect, useReducer } from "react";
+import { auth, db } from "./firebase";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 // Define the initial state for authentication
 interface AuthState {
@@ -22,8 +23,6 @@ const initialState: AuthState = {
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
     case "LOGIN":
-      // Store user data in session storage
-      sessionStorage.setItem("user", JSON.stringify(action.payload));
       return {
         ...state,
         user: action.payload,
@@ -44,17 +43,54 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
 export const AuthContext = createContext<{
   state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
+  logout: () => void;
 }>({
   state: initialState,
   dispatch: () => null,
+  logout: () => null,
 });
 
 // Create the authentication provider component
 export const AuthProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const unsub = onSnapshot(
+          collection(db, "customers"),
+          (snapShot) => {
+            let list = [];
+            snapShot.docs.forEach((doc) => {
+              list.push({ id: doc.id, ...doc.data() });
+              dispatch({ type: "LOGIN", payload: doc.data() });
+            });
+            // setData(list);
+          },
+          (error) => {
+            console.log("CUSTOM ERROR:", error);
+          }
+        );
+
+        return () => {
+          unsub();
+        };
+      } else {
+        dispatch({ type: "LOGOUT" });
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const logout = () => {
+    auth.signOut();
+  };
+
   return (
-    <AuthContext.Provider value={{ state, dispatch }}>
+    <AuthContext.Provider value={{ state, dispatch, logout }}>
       {children}
     </AuthContext.Provider>
   );

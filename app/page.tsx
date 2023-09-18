@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AuthContext } from "@/auth";
 
 import {
   Sheet,
@@ -14,13 +15,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useContext } from "react";
 
 export default function Home() {
   const router = useRouter();
+  const { state, dispatch, logout } = useContext(AuthContext);
 
-  const user = sessionStorage.getItem("user");
+  console.log("State:", state.isAuthenticated);
 
-  if (!user) {
+  if (!state) {
     return null; // Render nothing if there's no user (to avoid briefly showing the protected page)
   }
   return (

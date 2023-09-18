@@ -4,18 +4,18 @@ import "./login.scss";
 import { useState, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
-// import logo from "../../assets/login-logo.png";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import { AuthContext } from "../../context/AuthContext";
 import { useRouter } from "next/navigation";
 
-import { db } from "../../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { db, auth } from "../../firebase";
+import { collection, getDocs, addDoc, doc, setDoc } from "firebase/firestore";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { AuthContext } from "../../auth";
 
 const Login = () => {
-  // const { dispatch } = useContext(AuthContext);
   const router = useRouter();
+  const { state, dispatch } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -29,15 +29,13 @@ const Login = () => {
       (doc) => doc.data().email === email && doc.data().password === password
     );
     if (matchingUser) {
-      localStorage.setItem("roll", JSON.stringify(matchingUser.data().roll));
-      localStorage.setItem(
-        "username",
-        JSON.stringify(matchingUser.data().username)
-      );
-      localStorage.setItem("image", JSON.stringify(matchingUser.data().image));
-      localStorage.setItem("accountID", JSON.stringify(matchingUser.id));
-      // dispatch({ type: "LOGIN", payload: matchingUser.data() });
-      sessionStorage.setItem("user", JSON.stringify(matchingUser.data()));
+      try {
+        await addDoc(collection(db, "tempUser"), {
+          email: email,
+          password: password,
+        });
+      } catch (error) {}
+      dispatch({ type: "LOGIN", payload: matchingUser.data() });
 
       router.push("/");
     } else {
