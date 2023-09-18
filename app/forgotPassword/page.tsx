@@ -162,7 +162,7 @@ function ForgotPassword() {
             <label
               className="password-reset-page__label"
               htmlFor="email"
-              variants={itemVariants}
+              // variants={itemVariants}
             >
               Email
             </label>
@@ -175,17 +175,15 @@ function ForgotPassword() {
               placeholder="Enter Your Email"
               required
               onChange={(e) => setEmail(e.target.value)}
-              variants={itemVariants}
+              // variants={itemVariants}
             />
             {emailError && (
-              <p className="password-reset-page__error" variants={itemVariants}>
-                {emailError}
-              </p>
+              <p className="password-reset-page__error">{emailError}</p>
             )}
             <button
               className="password-reset-page__button"
               onClick={handleEmailVerification}
-              variants={itemVariants}
+              // variants={itemVariants}
             >
               Next
             </button>
@@ -200,7 +198,7 @@ function ForgotPassword() {
             <label
               className="password-reset-page__label"
               htmlFor="security-question"
-              variants={itemVariants}
+              // variants={itemVariants}
             >
               {secretQuestion}
             </label>
@@ -213,17 +211,15 @@ function ForgotPassword() {
               placeholder="Enter Your Answer"
               required
               onChange={(e) => setAnswer(e.target.value)}
-              variants={itemVariants}
+              // variants={itemVariants}
             />
             {answerError && (
-              <p className="password-reset-page__error" variants={itemVariants}>
-                {answerError}
-              </p>
+              <p className="password-reset-page__error">{answerError}</p>
             )}
             <button
               className="password-reset-page__button"
               onClick={handleSecurityQuestion}
-              variants={itemVariants}
+              // variants={itemVariants}
             >
               Next
             </button>
@@ -238,7 +234,7 @@ function ForgotPassword() {
             <label
               className="password-reset-page__label"
               htmlFor="password"
-              variants={itemVariants}
+              // variants={itemVariants}
             >
               Password
             </label>
@@ -253,7 +249,7 @@ function ForgotPassword() {
             <button
               className="password-reset-page__button"
               onClick={handleResetPassword}
-              variants={itemVariants}
+              // variants={itemVariants}
             >
               Back to Login{" "}
             </button>
