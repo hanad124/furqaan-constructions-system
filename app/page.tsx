@@ -16,9 +16,6 @@ export default function Home() {
   }
   return (
     <>
-      <Button variant="outline">
-        <Link href="/login">Login</Link>
-      </Button>{" "}
       <Button
         variant="destructive"
         onClick={() => {
