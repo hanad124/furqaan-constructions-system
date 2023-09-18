@@ -85,17 +85,6 @@ const Login = () => {
     <div className="login">
       <div className="login-container">
         <div className="login-cols">
-          <div className="login-cols-1">
-            <div className="logo">
-              {/* <img src={logo} alt="logo" /> */}
-              {/* <Image src={logo} alt="logo" width={100} height={100} /> */}
-            </div>
-            <p className="col1-title">sinay petroleum</p>
-            <p className="col1-desc">
-              <span>Sinay management system</span> Will mange your petrol &amp;
-              accounts easily.
-            </p>
-          </div>
           <div className="login-cols-2">
             <h1>Login to your account</h1>
             <form className="form" onSubmit={handleLogin}>
