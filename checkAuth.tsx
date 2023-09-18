@@ -7,14 +7,23 @@ const CheckAuth = ({ children }: any) => {
   const { state, dispatch } = useContext(AuthContext);
 
   useEffect(() => {
-    // Check if the user is authenticated on initial load
-    const user = sessionStorage.getItem("user");
-    if (user) {
-      dispatch({ type: "LOGIN", payload: JSON.parse(user) });
-    } else {
-      router.push("/login");
-    }
+    const checkAuthentication = () => {
+      // Check if the user is authenticated on initial load
+      const user = sessionStorage.getItem("user");
+      if (user) {
+        dispatch({ type: "LOGIN", payload: JSON.parse(user) });
+      } else {
+        router.push("/login");
+      }
+    };
+
+    checkAuthentication();
   }, []);
+
+  if (!state.user) {
+    // return null; // Render nothing if there's no user (to avoid briefly showing the protected page)
+    router.push("/login");
+  }
 
   return <>{children}</>;
 };

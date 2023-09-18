@@ -3,11 +3,12 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { AuthContext } from "@/context/AuthContext";
+import { AuthContext } from "../auth";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import { AuthProvider } from "@/auth";
 import CheckAuth from "@/checkAuth";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+
   return (
     <html lang="en">
       <body className={inter.className}>

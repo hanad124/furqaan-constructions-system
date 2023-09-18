@@ -5,8 +5,6 @@ import { getAuth } from "firebase/auth"; // import auth from firebase/auth
 
 const FIREBASE_API_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
-console.log("API_KEY:", FIREBASE_API_KEY);
-
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
   authDomain: "furqaan-constructions.firebaseapp.com",
