@@ -143,7 +143,7 @@ const Login = () => {
               </Link>
               <div className="btn_login-wrapper">
                 <button
-                  className="submit-login bg-[#D54F33] hover:bg-[#c74a31]"
+                  className="submit-login bg-gradient-to-r from-red-500 to-orange-500 hover:from-orange-500 hover:to-red-500 transition-all "
                   type="submit"
                   disabled={Boolean(emailError) || Boolean(passwordError)}
                 >
