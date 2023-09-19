@@ -4,6 +4,7 @@ import "./login.scss";
 import { useState, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import logo from "@/public/assets/logo.svg";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useRouter } from "next/navigation";
@@ -80,16 +81,31 @@ const Login = () => {
   return (
     <div className="login">
       <div className="login-container">
-        <div className="login-cols">
-          <div className="login-cols-2">
-            <h1>Login to your account</h1>
+        <div className="login-cols flex justify-center items-center h-full w-full">
+          <div className="login-cols-2 bg-white w-full mx-3 md:max-0 mt-16 md:mt-32 px-7 py-10 md:w-[25rem] rounded-lg">
+            <div className="flex items-center  gap-3">
+              <Image
+                src={logo}
+                width={500}
+                height={500}
+                alt="logo"
+                className="w-8"
+              />
+              <h1 className="text-2xl font-semibold text-[#27255F] uppercase">
+                Furqaan
+              </h1>
+            </div>
+
+            <h2 className="text-left mt-[2rem]  text-[1.2rem] font-medium text-[#27255F]">
+              Login to your account
+            </h2>
             <form className="form" onSubmit={handleLogin}>
               <p className="name">Email address</p>
               <input
                 type="email"
                 id="txtEmail"
                 required
-                placeholder="Email address"
+                // placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={handleEmailBlur}
@@ -101,7 +117,7 @@ const Login = () => {
                   type={showPassword ? "text" : "password"}
                   id="txtPass"
                   required
-                  placeholder="Enter your password"
+                  // placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onBlur={handlePasswordBlur}
