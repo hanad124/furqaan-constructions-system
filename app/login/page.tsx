@@ -84,7 +84,7 @@ const Login = () => {
           <div className="login-cols-2">
             <h1>Login to your account</h1>
             <form className="form" onSubmit={handleLogin}>
-              <p className="name">Email</p>
+              <p className="name">Email address</p>
               <input
                 type="email"
                 id="txtEmail"
@@ -114,7 +114,7 @@ const Login = () => {
                   />
                 ) : (
                   <VisibilityOffOutlinedIcon
-                    className="eye text-slate-500"
+                    className="eye text-slate-500 "
                     style={{ cursor: "pointer", color: "gray" }}
                     onClick={HidePassword}
                   />
