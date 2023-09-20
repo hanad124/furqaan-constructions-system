@@ -66,7 +66,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login bg-gradient-to-r from-red-500 to-orange-500">
+    <div className="login bg-white">
       <div className="login-container">
         <div className="login-cols flex justify-center items-center h-full w-full">
           <div className="login-cols-2 bg-white w-full mx-3 md:max-0 mt-16 md:mt-32 px-7 py-10 md:w-[25rem] rounded-lg">
