@@ -1,7 +1,7 @@
 "use client";
 
 import "./login.scss";
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/assets/logo.svg";
@@ -9,39 +9,26 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useRouter } from "next/navigation";
 
-import { db, auth } from "../../firebase";
-import { collection, getDocs, addDoc, doc, setDoc } from "firebase/firestore";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { AuthContext } from "../../auth";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
   const router = useRouter();
-  const { state, dispatch } = useContext(AuthContext);
+  const [data, setData] = useState({ email: "", password: "" });
+
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const handleLogin = async (e: { preventDefault: () => void }) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const querySnapshot = await getDocs(collection(db, "users"));
-    const matchingUser = querySnapshot.docs.find(
-      (doc) => doc.data().email === email && doc.data().password === password
-    );
-    if (matchingUser) {
-      try {
-        await addDoc(collection(db, "tempUser"), {
-          email: email,
-          password: password,
-        });
-      } catch (error) {}
-      dispatch({ type: "LOGIN", payload: matchingUser.data() });
-
-      router.push("/");
-    } else {
-      setPasswordError("Invalid email or password");
-    }
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    });
+    router.push("/dashboard");
   };
 
   const HidePassword = () => {
@@ -100,17 +87,18 @@ const Login = () => {
               Login to your account
             </h2>
             <form className="form" onSubmit={handleLogin}>
-              <p className="name">Email address</p>
+              <p className="email">Email</p>
               <input
                 type="email"
-                id="txtEmail"
+                id="email"
                 required
                 // placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onBlur={handleEmailBlur}
+                value={data.email}
+                // onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setData({ ...data, email: e.target.value })}
+                // onBlur={handleEmailBlur}
               />
-              {emailError && <p className="error">{emailError}</p>}
+              {/* {emailError && <p className="error">{emailError}</p>} */}
               <p className="password">Password</p>
               <div className="passWrapper">
                 <input
@@ -118,9 +106,14 @@ const Login = () => {
                   id="txtPass"
                   required
                   // placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onBlur={handlePasswordBlur}
+                  // value={password}
+                  // onChange={(e) => setPassword(e.target.value)}
+                  // onBlur={handlePasswordBlur}
+
+                  value={data.password}
+                  onChange={(e) =>
+                    setData({ ...data, password: e.target.value })
+                  }
                 />
                 {showPassword ? (
                   <RemoveRedEyeOutlinedIcon
